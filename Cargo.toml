@@ -1,0 +1,31 @@
+[package]
+name = "pdfsearch"
+license = "MIT"
+version = "0.6.0"
+edition = "2021"
+description = "Recursively indexes PDFs via pdftotext, makes them full-text searchable, and serves a local web GUI with inline highlighted PDF viewing."
+
+[[bin]]
+name = "pdfsearch"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "=4.5.4", features = ["derive"] }
+walkdir = "2"
+rayon = "1"
+tantivy = { version = "0.22", default-features = false, features = ["mmap", "stopwords", "zstd-compression"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+indicatif = { version = "0.17", features = ["rayon"] }
+open = "5"
+dirs = "5"
+tiny_http = { version = "0.12", default-features = false }
+percent-encoding = "2"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "unwind"
+strip = true
